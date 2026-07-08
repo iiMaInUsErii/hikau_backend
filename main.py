@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify, send_from_directory
+from flask import Flask, request, jsonify, send_from_directory, render_template
 from flask_cors import CORS
 from flask_socketio import SocketIO, join_room
 import sqlite3
@@ -17,8 +17,8 @@ ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif', 'pdf', 'txt', 'mp3', 'mp4', '
 
 os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
 
-CORS(app, origins="http://localhost:5173", supports_credentials=True)
-socketio = SocketIO(app, cors_allowed_origins="http://localhost:5173", async_mode='eventlet')
+CORS(app, origins="http://localhost:5000", supports_credentials=True)
+socketio = SocketIO(app, cors_allowed_origins="http://localhost:5000", async_mode='eventlet')
 
 DATABASE = 'chat.db'
 
@@ -57,6 +57,10 @@ with closing(get_db()) as conn:
 
 def hash_password(p): 
     return hashlib.sha256(p.encode()).hexdigest()
+
+@app.route('/')
+def index():
+    return render_template('index.html')
 
 # ====================== AUTH ======================
 @app.route("/api/register", methods=['POST'])
@@ -107,6 +111,10 @@ def upload_file():
 @app.route('/uploads/<filename>')
 def uploaded_file(filename):
     return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
+
+@app.route('/assets/<path:filename>')
+def serve_assets(filename):
+    return send_from_directory('assets', filename)
 
 # ====================== CHATS ======================
 @app.route("/api/my_chats", methods=['GET'])

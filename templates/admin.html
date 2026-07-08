@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% block content %}
+<div>
+    <form action='admin' method='get'>
+        Command: <input name="command"/>
+        <button class="mui-btn mui-btn--small mui-btn--primary small" type="submit">Execute</button>
+    </form>
+    <div class="mui-panel">
+        {{ output }}
+    </div>
+    <table id='example'>
+        <thead>
+            <tr>
+                <th>id</th>
+                <th>name</th>
+                <th>text</th>
+                <th>time</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in output %}
+            <tr>
+                <td>{{row[0]}}</td>
+                <td>{{row[1]}}</td>
+                <td>{{row[2]}}</td>
+                <td>{{row[3]}}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <script type='text/javascript'>
+    $(document).ready(function() {
+        $('#example').DataTable( {
+            serverSide: true,
+            ordering: false,
+            searching: false,
+            ajax: function ( output, callback, settings ) {
+                var out = [];
+
+                for ( var i=output.start, ien=Result.start+Result.length ; i<ien ; i++ ) {
+                    out.push( [ i+'-1', i+'-2', i+'-3', i+'-4', i+'-5', i+'-6' ] );
+                }
+
+                setTimeout( function () {
+                    callback( {
+                        draw: data.draw,
+                        data: out,
+                        recordsTotal: 5000000,
+                        recordsFiltered: 5000000
+                    } );
+                }, 50 );
+            },
+            scrollY: 200,
+            scroller: {
+                loadingIndicator: true
+            },
+        } );
+    } );</script>
+</div>
+{% endblock %}

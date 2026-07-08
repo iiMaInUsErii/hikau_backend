@@ -1,0 +1,47 @@
+.small {
+    font-size: 12px;
+    height: 29px;
+    padding: 0 8px;
+    margin: 0;
+}
+
+#message {
+    display: inline-block;
+    text-align: justify;
+    padding: 10px 15px;
+    margin: 7px 0 0 0;
+    border: 1px solid;
+    border-radius: 20px;
+    max-width: 75vw;
+    overflow-wrap: break-word;
+}
+
+.left {
+    text-align: left;
+}
+
+.right {
+    text-align: right;
+}
+
+#text {
+    width: 80%;
+    height: 33px;
+}
+
+#new-message-panel {
+    width: 100%;
+    position: fixed;
+    bottom: 0px;
+    text-align: center;
+}
+
+th {
+    border: 2px solid;
+    background: grey;
+}
+
+td {
+    border: 2px solid;
+    background: lightgrey;
+}

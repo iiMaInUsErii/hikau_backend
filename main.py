@@ -17,8 +17,8 @@ ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif', 'pdf', 'txt', 'mp3', 'mp4', '
 
 os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
 
-CORS(app, origins="http://localhost:5000", supports_credentials=True)
-socketio = SocketIO(app, cors_allowed_origins="http://localhost:5000", async_mode='eventlet')
+CORS(app, origins=["http://localhost:5173", "http://localhost:5000"], supports_credentials=True)
+socketio = SocketIO(app, cors_allowed_origins=["http://localhost:5173", "http://localhost:5000"], async_mode='eventlet')
 
 DATABASE = 'chat.db'
 
